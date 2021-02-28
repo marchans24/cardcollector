@@ -1,19 +1,6 @@
 from django.shortcuts import render
+from .models import Card
 
-# Add the following import
-from django.http import HttpResponse
-
-class Card:
-    def __init__(self, name, make, value, year):
-        self.name = name
-        self.make = make
-        self.value = value
-        self.year = year
-
-cards = [
-    Card('Patrick Mahomes', 'Panini', '23', '2018'),
-    Card('Doug McDermott', 'Topps', '10', '2020')
-]
 
 
 # Define the home view
@@ -24,4 +11,9 @@ def about(request):
     return render(request, 'about.html')
 
 def cards_index(request):
+    cards = Card.objects.all()
     return render(request, 'cards/index.html', { 'cards': cards })
+
+def cards_detail(request, card_id):
+  card = Card.objects.get(id=card_id)
+  return render(request, 'cards/detail.html', { 'card': card })
